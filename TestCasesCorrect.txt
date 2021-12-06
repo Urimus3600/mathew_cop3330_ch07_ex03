@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Assignment 6 Solution
+ *  Copyright 2021 Austin Mathew
+ */
+
 5+5; 5%3;
 let x=k; (x+k)%k;
 sqrt(144); sqrt(144+12/12 -1);
