@@ -1,3 +1,15 @@
 5+5; 5%3;
 let x=k; (x+k)%k;
 sqrt(144); sqrt(144+12/12 -1);
+let hello = 10.56;
+hello = 10.7;
+const hello = 12;
+let const Hello = 50;
+let const world=hello+Hello;
+let object_1 = sqrt(200000.5);
+object_1 = object_1%100;
+exit
+
+
+//these inputs are all correct and will produce numerical outputs, to show calculator syntax and correctness etc.
+//it's suggested these are put in one line at a time or the outputs may be confusing

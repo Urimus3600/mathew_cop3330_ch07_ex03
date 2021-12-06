@@ -77,6 +77,8 @@ Token Token_stream::get()
                 cin >> afterDec;
                 if(!isdigit(afterDec)){
                     return Token(number, 0);
+                    //if no digits around decimal, program won't read it in
+                    //so I instead set the value to 0
                 }
             }
         }
@@ -213,22 +215,30 @@ double primary()
 
             t = ts.get();
             if(!(t.kind == '(')) error("expected '(' after sqrt");
-            	double d = expression();
-                t = ts.get();
-                if (t.kind != ')') error("expected ')' after sqrt(a");
-                //checks syntax
-                return sqrt(d);
+            //checks syntax
+            double d = expression();
+            //reads in parameter
+            t = ts.get();
+            if (t.kind != ')') error("expected ')' after sqrt(a");
+            //checks syntax
+            return sqrt(d);
         }
         case fpow:{
             t = ts.get();
             if(!(t.kind == '(')) error("expected '(' after pow");
+            //checks syntax
             double a = expression();
+            //reads in first parameter
             t = ts.get();
             if(!(t.kind == ',')) error("expected ',' between parameters of pow");
+            //checks syntax
             double b = expression();
+            //reads in second parameter
             if(fmod(b,1)!=0) error("second parameter of pow must be an integer");
+            //checks if integer
             t = ts.get();
             if(!(t.kind == ')')) error("expected ')' after pow(a,b");
+            //checks syntax
             return pow(a,b);
         }
         default:
@@ -335,26 +345,27 @@ double statement()
         case let://if declaration
         {
             t = ts.get();
-            if(t.kind == decConst){
+            if(t.kind == decConst){//checks if needs to be const
                 return declaration(true);
             }
             else{
-                ts.unget(t);
+                ts.unget(t);//if something else, put back to buffer
                 return declaration(false);
             }
         }
-        case decConst:{
+        case decConst:{//for reassignment with const
             constant = true;
-            t = ts.get();
-            if(!(t.kind == name)) error("name type expected after const");
-        }
+            t = ts.get();//reads in next Token
+            if(!(t.kind == name)) error("name type expected after const");//checks notation
+        }//no return so goes to name case aka reassignment
         case name:{
-            if(is_declared(t.name)){
+            if(is_declared(t.name)){//if name exists as variable
                 char ch; cin >> ch;
-                if(ch =='='){
+                //name is already read in, to prevent buffer overflow i read directly from cin
+                if(ch =='='){//checks if it is assignment
                     return reassignment(t.name, constant);
                 }
-                else if(constant){
+                else if(constant){//if const was used, but this is not assignment there is an error
                     error("incorrect use of const");
                 }
                 ts.unget(t);
@@ -379,6 +390,8 @@ void calculate()
     names.push_back(Variable("pi", 3.1415926535, true));
     names.push_back(Variable("e", 2.7182818284, true));
     names.push_back(Variable("k",1000, true));
+    //sets predefined constants
+
 	while (true) try {
 		cout << prompt;//tells user to start
 		Token t = ts.get();//reads in next token

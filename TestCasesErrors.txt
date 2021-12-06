@@ -28,3 +28,7 @@ quit
 sqrt(200.14, 3.5); sqrt(200,12;
 let hello_world = 200; const hello_world_world =100; consthello_world=400; hello_world = 50; const hello_world = 50;
 1/2-1/3+1/4-1/5+1/6-1/7+1/8;
+exit
+
+has mix of erroneous and correct statements
+//it's suggested these are put in one line at a time or the outputs may be confusing
